@@ -80,8 +80,8 @@ def obter_informacoes_jogador(steam_id, api_key):
         return None, None
 
 def main():
-    steam_id = 'YOUR_STEAM_ID_CODE'
-    api_key = 'YOUR_STEAM_API_CODE'
+    steam_id = 'USER_STEAM_ID'
+    api_key = 'YOUR_API_CODE'
 
     # Obter informações do jogador
     personaname, personastate = obter_informacoes_jogador(steam_id, api_key)
@@ -104,10 +104,10 @@ def main():
 
             nome_do_jogo, img_url = obter_nome_e_imagem_jogo(appid, api_key)
 
-            if nome_do_jogo == 'Nome não disponível':
-                jogos_sem_nome.append((appid, tempo_jogado_horas, img_url))
+            if nome_do_jogo == 'Nome não disponível' or nome_do_jogo == None or nome_do_jogo == "None":
+                jogos_sem_nome.append((appid, tempo_jogado_horas))
             else:
-                jogos_com_nome.append((nome_do_jogo, appid, tempo_jogado_horas, img_url))
+                    jogos_com_nome.append((nome_do_jogo, appid, tempo_jogado_horas))
 
         # Ordenar jogos com nome disponível por horas de jogo em ordem decrescente
         jogos_com_nome = sorted(jogos_com_nome, key=lambda x: x[2], reverse=True)
@@ -120,6 +120,7 @@ def main():
 
         # Imprimir jogos com nome disponível
         for jogo_com_nome in jogos_com_nome:
+            
             print(f"{jogo_com_nome[0]} (AppID: {jogo_com_nome[1]}) - {jogo_com_nome[2]:.2f} horas jogadas")
 
         # Ordenar jogos sem nome por horas de jogo em ordem decrescente
