@@ -239,8 +239,9 @@ def criar_tela():
         banner_label.photo = banner_photo
         banner_label.pack()
 
-    lbl_instrucao = tk.Label(root, text="Insira seu Steam ID abaixo:", font=("Arial", 12), bg='#333333', fg='white')
+    lbl_instrucao = tk.Label(root, text="Steam ID:", font=("Arial", 12), bg='#333333', fg='white')
     lbl_instrucao.pack(pady=(20, 10))  # Adicionei um espaçamento acima e abaixo
+    
 
     entry_steam_id = tk.Entry(root, width=30, font=("Arial", 12))
     entry_steam_id.pack(pady=10)
@@ -259,7 +260,8 @@ def criar_tela():
     # Obtém as dimensões da tela
     largura_tela = root.winfo_screenwidth()
     altura_tela = root.winfo_screenheight()
-
+    lbl_dev = tk.Label(root, text="@ashcrysis:", font=("Arial", 12), bg='#262626', fg='white')
+    lbl_dev.pack(pady=(20, 10))  # Adicionei um espaçamento acima e abaixo
     # Calcula a posição para centralizar a janela
     x_pos = (largura_tela - largura_janela) // 2
     y_pos = (altura_tela - altura_janela) // 2
