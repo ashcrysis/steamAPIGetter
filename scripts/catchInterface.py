@@ -1,11 +1,19 @@
 import tkinter as tk
-from tkinter import scrolledtext  # Adicione esta linha
+from tkinter import scrolledtext
 from PIL import Image, ImageTk
 import requests
 from io import BytesIO
 import functools
 from PIL import Image, ImageDraw
+import webbrowser
+from tkinter import ttk
+import os
 
+def abrir_linkedin():
+    webbrowser.open("https://www.linkedin.com/in/asher-gabriela/")
+
+def abrir_github():
+    webbrowser.open("https://github.com/ashcrysis")
 
 def criar_circulo_cor(cor, tamanho=(15, 15)):
     imagem = Image.new("RGBA", tamanho, (255, 255, 255, 0))
@@ -102,12 +110,13 @@ def obter_informacoes_jogador(steam_id, api_key):
 
 def criar_tela():
     def obter_informacoes():
+       
         steam_id = entry_steam_id.get()
         api_key = 'YOUR_API_KEY'
 
         personaname, personastate, avatar_url, jogo_atual, ultimo_jogo = obter_informacoes_jogador(steam_id, api_key)
         lista_jogos = obter_lista_jogos(steam_id, api_key)
-
+        
         if lista_jogos:
             jogos_com_nome = []
             jogos_sem_nome = []
@@ -125,14 +134,26 @@ def criar_tela():
                     jogos_com_nome.append((nome_do_jogo, appid, tempo_jogado_horas))
 
             jogos_com_nome = sorted(jogos_com_nome, key=lambda x: x[1], reverse=True)
-           
 
             mostrar_resultados(personaname, personastate, avatar_url, jogos_com_nome,jogo_atual, ultimo_jogo)
+           
 
     def mostrar_resultados(personaname, personastate, avatar_url, jogos_com_nome, jogo_atual, ultimo_jogo):
         resultado_window = tk.Toplevel(root)
         resultado_window.title("Resultados")
+        largura_tela = resultado_window.winfo_screenwidth()
+        altura_tela = resultado_window.winfo_screenheight()
 
+        # Definir as dimensões da janela principal
+        largura_janela = 500  # Ajuste conforme necessário
+        altura_janela = 600  # Ajuste conforme necessário
+
+        # Calcular a posição para centralizar a janela
+        x_pos = (largura_tela - largura_janela) // 2
+        y_pos = (altura_tela - altura_janela) // 2
+
+        # Definir a geometria da janela principal
+        resultado_window.geometry(f"{largura_janela}x{altura_janela}+{x_pos}+{y_pos}")
         resultado_window.configure(bg='#262626')  # Cor de fundo escura
 
         # Centralizar foto
@@ -202,19 +223,51 @@ def criar_tela():
 
 
     root = tk.Tk()
-    root.title("Informações do Jogador")
+    root.title("Steam API Getter")
 
-    root.configure(bg='#262626')  # Cor de fundo escura
+    # Adicione um banner
+    banner_path = "steamAPIGetter/sample/asher-asmp-header.jpg"  # Substitua pelo caminho real do banner
+    if os.path.exists(banner_path):
+        banner_img = Image.open(banner_path)
+        largura_janela = 500  # Ajuste conforme necessário
+        altura_janela = 600  # Ajuste conforme necessário
+        banner_img = banner_img.resize((largura_janela, 100))
 
-    lbl_instrucao = tk.Label(root, text="Insira seu Steam ID abaixo:", bg='#262626', fg='white')
-    lbl_instrucao.pack(pady=5)
+        banner_photo = ImageTk.PhotoImage(banner_img)
 
-    entry_steam_id = tk.Entry(root, width=30)
+        banner_label = tk.Label(root, image=banner_photo, bg='#333333')
+        banner_label.photo = banner_photo
+        banner_label.pack()
+
+    lbl_instrucao = tk.Label(root, text="Insira seu Steam ID abaixo:", font=("Arial", 12), bg='#333333', fg='white')
+    lbl_instrucao.pack(pady=(20, 10))  # Adicionei um espaçamento acima e abaixo
+
+    entry_steam_id = tk.Entry(root, width=30, font=("Arial", 12))
     entry_steam_id.pack(pady=10)
 
-    btn_obter_info = tk.Button(root, text="Obter Informações", command=obter_informacoes, bg='#333333', fg='white')
+    btn_obter_info = tk.Button(root, text="Obter Informações", command=obter_informacoes, bg='#3498db', fg='white', font=("Arial", 12))
     btn_obter_info.pack(pady=10)
 
+    btn_linkedin = tk.Button(root, text="Dev LinkedIn", command=abrir_linkedin, bg='#0077b5', fg='white', font=("Arial", 10, "italic"))
+    btn_linkedin.pack(pady=5)
+
+    btn_github = tk.Button(root, text="Dev GitHub", command=abrir_github, bg='#333333', fg='white', font=("Arial", 10, "italic"))
+    btn_github.pack(pady=5)
+    
+    largura_janela = 500  # Ajuste conforme necessário
+    altura_janela = 600  # Ajuste conforme necessário
+    # Obtém as dimensões da tela
+    largura_tela = root.winfo_screenwidth()
+    altura_tela = root.winfo_screenheight()
+
+    # Calcula a posição para centralizar a janela
+    x_pos = (largura_tela - largura_janela) // 2
+    y_pos = (altura_tela - altura_janela) // 2
+
+    # Define a geometria da janela principal
+    root.geometry(f"{largura_janela}x{altura_janela}+{x_pos}+{y_pos}")
+
+    root.configure(bg='#262626')  # Cor de fundo escura
     root.mainloop()
 
 if __name__ == "__main__":
