@@ -114,6 +114,7 @@ def main():
 
         # Ordenar jogos com nome disponível por horas de jogo em ordem decrescente
         jogos_com_nome = sorted(jogos_com_nome, key=lambda x: x[2], reverse=True)
+        print("\n\n\n\n\n")
         print(f'Informações do jogador:')
         print(f'Personal Name: {personaname}')
         personastate = mapear_persona_state(personastate)
