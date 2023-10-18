@@ -110,7 +110,7 @@ def create_main_screen():
     def get_information():
        
         steam_id = entry_steam_id.get()
-        api_key = 'FD6722EB137DA59B0B2E23E5C6BD2050'
+        api_key = 'YOUR_API_KEY'
 
         personaname, personastate, avatar_url, current_game, last_game = get_player_info(steam_id, api_key)
         game_list = get_game_list(steam_id, api_key)
