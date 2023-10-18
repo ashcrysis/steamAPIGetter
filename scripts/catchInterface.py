@@ -73,7 +73,7 @@ def get_game_name_and_image(appid, api_key):
 
             return game_name, img_icon_url
         else:
-            #print('Error retrieving game information.')
+            print('Error retrieving game information.')
             return None, None
 
     except Exception as e:
@@ -135,7 +135,7 @@ def create_main_screen():
 
             show_results(personaname, personastate, avatar_url, games_with_name, current_game, last_game)
            
-
+    
     def show_results(personaname, personastate, avatar_url, games_with_name, current_game, last_game):
         result_window = tk.Toplevel(root)
         result_window.title("Results")
@@ -153,7 +153,9 @@ def create_main_screen():
         # Set the geometry of the main window
         result_window.geometry(f"{window_width}x{window_height}+{x_pos}+{y_pos}")
         result_window.configure(bg='#262626')  # Dark background color
-
+        
+        
+        
         # Center the photo
         lbl_avatar = tk.Label(result_window)
         lbl_avatar.grid(row=0, column=0, columnspan=3, pady=10, sticky="n")
@@ -166,6 +168,8 @@ def create_main_screen():
         lbl_state = tk.Label(result_window, text=f"Persona State: {personastate_text}", font=("Arial", 12), bg='#262626', fg='white')
         lbl_state.grid(row=2, column=1, columnspan=1, pady=5)
 
+        btn_reload = tk.Button(result_window, text="Reload Info", command=get_information, bg='#262626', fg='white', font=("Arial", 12))
+        btn_reload.grid(row=6,column=0, columnspan=3, pady=5)
         # Create state circle
         if personastate == 0:
             circle_color = "black"
@@ -190,10 +194,10 @@ def create_main_screen():
         lbl_last_game.grid(row=4, column=0, columnspan=3, pady=5)
 
         lbl_all_games = tk.Label(result_window, text="All Games", font=("Arial", 12, "underline"), bg='#262626', fg='white')
-        lbl_all_games.grid(row=5, column=0, columnspan=3, pady=5)
+        lbl_all_games.grid(row=7, column=0, columnspan=3, pady=5)
 
         text_all_games = scrolledtext.ScrolledText(result_window, width=60, height=15, bg='#333333', fg='white')
-        text_all_games.grid(row=6, column=0, columnspan=3, pady=5)
+        text_all_games.grid(row=8, column=0, columnspan=3, pady=5)
 
         all_games = sorted(games_with_name, key=lambda x: x[2], reverse=True)
 
@@ -205,7 +209,7 @@ def create_main_screen():
 
             hours_played = game[2]
             text_all_games.insert(tk.END, f"{game_name} - {hours_played:.2f} hours played\n")
-
+        
         result_window.mainloop()
 
     def load_avatar(label, avatar_url):
@@ -268,3 +272,4 @@ def create_main_screen():
 
 if __name__ == "__main__":
     create_main_screen()
+    update_information()
