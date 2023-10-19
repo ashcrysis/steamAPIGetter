@@ -108,7 +108,6 @@ def get_player_info(steam_id, api_key):
 
 def create_main_screen():
     def get_information():
-       
         steam_id = entry_steam_id.get()
         api_key = 'YOUR_API_KEY'
 
@@ -134,7 +133,6 @@ def create_main_screen():
             games_with_name = sorted(games_with_name, key=lambda x: x[1], reverse=True)
 
             show_results(personaname, personastate, avatar_url, games_with_name, current_game, last_game)
-           
     
     def show_results(personaname, personastate, avatar_url, games_with_name, current_game, last_game):
         result_window = tk.Toplevel(root)
@@ -153,7 +151,7 @@ def create_main_screen():
         # Set the geometry of the main window
         result_window.geometry(f"{window_width}x{window_height}+{x_pos}+{y_pos}")
         result_window.configure(bg='#262626')  # Dark background color
-        
+        result_window.resizable(False,False) 
         
         
         # Center the photo
@@ -223,7 +221,7 @@ def create_main_screen():
 
     root = tk.Tk()
     root.title("Steam API Getter")
-
+    root.resizable(False,False) 
     # Add a banner
     banner_path = "steamAPIGetter/sample/asher-asmp-header.jpg"  # Replace with the actual path of the banner
     if os.path.exists(banner_path):
@@ -266,10 +264,9 @@ def create_main_screen():
 
     # Set the geometry of the main window
     root.geometry(f"{window_width}x{window_height}+{x_pos}+{y_pos}")
-
+    
     root.configure(bg='#262626')  # Dark background color
     root.mainloop()
 
 if __name__ == "__main__":
     create_main_screen()
-    update_information()
